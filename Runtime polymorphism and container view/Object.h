@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <any>
 #include <ranges>
+#include <optional>
 #include "SFML/Graphics/RenderWindow.hpp"
 
 template<typename T, typename U>
@@ -20,46 +21,34 @@ constexpr ibase vtable_for{
 	[](std::any& _storage) { std::any_cast<ConcreteType&>(_storage).draw(std::add_lvalue_reference<sf::RenderWindow>{}); },
 };
 
-class Object
+struct Object
 {
-public:
-	Object(copy_constructor_for_ref<Object> auto&& x) : m_storage{ std::make_any(x) },
-		m_vtable{ std::move<decltype(x)>(vtable_for),[](std::any& _storage)
-			{delete std::any_cast<std::remove_cvref_t<decltype(x)>>(&_storage); } } {}
+	Object(copy_constructor_for_ref<Object> auto&& x) : m_storage(std::make_any(x)),
+		m_vtable(std::move<decltype(x)>(vtable_for), [](std::any& _storage)
+			{delete std::any_cast<std::remove_cvref_t<decltype(x)>>(&_storage); }) {}
 
 	void draw(sf::RenderWindow&);
 
 private:
-	std::any m_storage;
-	std::shared_ptr<ibase const> m_vtable;
+	std::any m_storage{};
+	std::shared_ptr<ibase const> m_vtable{};
 };
 
-template<typename T>
-class composite : public std::ranges::view_interface<composite<T>> {
-public:
+template<std::semiregular T>
+struct composite : std::ranges::view_interface<composite<T>> {
+	composite() = default;
 
-	composite(std::ranges::range auto const& x) : m_begin{ std::ranges::begin(x) },
-		m_end{ std::ranges::end(x) }{}
+	composite(T x) : m_data(std::move(x)) {}
 
-	auto begin()const noexcept {
-		return m_begin;
+	T const* begin() const noexcept {
+		return m_data ? &*m_data : nullptr;
+	}
+	T const* end() const noexcept {
+		return m_data ? &*m_data + 1 : nullptr;
 	}
 
-	auto end()const noexcept {
-		return m_end;
-	}
-
-	/*void draw(sf::RenderWindow& w) const {
-		if constexpr (std::same_as < T, typename TContainer::mapped_type>) {
-			for (auto&& [k, v] : *this) {
-				!:m
-
-			}
-		}
-	}*/
 private:
-	typename std::ranges::iterator_t<T> m_begin;
-	typename std::ranges::sentinel_t<T> m_end;
+	std::optional<T> m_data{};
 };
 #endif
 
