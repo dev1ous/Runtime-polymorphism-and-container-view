@@ -9,15 +9,18 @@
 #include <optional>
 #include "SFML/Graphics/RenderWindow.hpp"
 
-template<typename T, typename U>
-concept copy_constructor_for_ref = !std::same_as<std::remove_cvref_t<T>, U>;
 
-struct ibase 
+template<class object_impl>
+concept object_like = requires (object_impl obj, sf::RenderWindow& w) {
+	{ obj.draw(w) } -> std::same_as<void>;
+};
+
+class ibase 
 {
 	void(*draw)(std::any&);
 };
 
-template<std::semiregular ConcreteType>
+template<std::semiregular ConcreteType >
 constexpr ibase vtable_for
 {
 	[](std::any& _storage) { std::any_cast<ConcreteType&>(_storage).draw(std::add_lvalue_reference<sf::RenderWindow>{}); },
@@ -26,9 +29,16 @@ constexpr ibase vtable_for
 class Object
 {
 public:
-	Object(copy_constructor_for_ref<Object> auto&& x) : m_storage(std::make_any(x)),
-		m_vtable(std::move<decltype(x)>(vtable_for), [](std::any& _storage)
-			{delete std::any_cast<std::remove_cvref_t<decltype(x)>>(&_storage); }) {} 
+
+	/*Object(copy_constructor_for_ref<Object> auto&& x) : m_storage(std::make_any(x)),
+		m_vtable(std::move<decltype(x)>(vtable_for), [&m_storage]
+			{delete std::any_cast<std::remove_cvref_t<decltype(x)>>(&m_storage); }) {}*/
+
+	template<object_like ConcreteType>
+	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, Object>)
+		Object(ConcreteType&& x) : m_storage(std::make_any(x)),
+		m_vtable(std::move<ConcreteType>(vtable_for), [&m_storage]
+			{delete std::any_cast<ConcreteType>(&m_storage); }) {}
 
 	void draw(sf::RenderWindow&);
 
@@ -55,7 +65,7 @@ public:
 
 	void draw(sf::RenderWindow& w)
 	{
-		*this | std::views::transform(std::move(this->m_data.value().draw(w))) | std::views::join;
+		*this | std::views::transform(this->m_data.value().draw(w)) | std::views::join;
 	}
 
 	template<std::ranges::output_range TContainer>
