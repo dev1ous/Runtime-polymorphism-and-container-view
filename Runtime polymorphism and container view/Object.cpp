@@ -2,6 +2,7 @@
 
 void Object::draw(sf::RenderWindow& w)
 {
-	m_vtable->draw(m_storage);
+	m_vtable->draw(m_storage, w);
 }
+
 
