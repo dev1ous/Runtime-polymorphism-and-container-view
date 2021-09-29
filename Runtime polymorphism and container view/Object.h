@@ -9,7 +9,6 @@
 #include <optional>
 #include "SFML/Graphics/RenderWindow.hpp"
 
-
 template<typename object_impl>
 concept object_like = requires (object_impl obj, sf::RenderWindow& w) 
 {
@@ -19,12 +18,14 @@ concept object_like = requires (object_impl obj, sf::RenderWindow& w)
 struct ibase 
 {
 	void(*draw)(std::any&, sf::RenderWindow&);
+	void(*destroy)(std::any&, sf::RenderWindow&);
 };
 
 template<std::semiregular ConcreteType>
 constexpr ibase vtable_for
 {
 	[](std::any& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(_storage).draw(w); },
+	[](std::any&)
 };
 
 class Object
@@ -34,11 +35,18 @@ public:
 	template<object_like ConcreteType>
 	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, Object>)
 		Object(ConcreteType&& x) : m_storage(std::make_any<ConcreteType>(x)),
-		m_vtable(&vtable_for<ConcreteType>) {}
+		m_vtable(Object::make_shared_deleter<ConcreteType>(m_storage)) {}
 
 	void draw(sf::RenderWindow&);
 
+	template<typename ConcreteType>
+	static std::shared_ptr<ibase const> make_shared_deleter(std::any& _storage) {
+		return std::shared_ptr<ibase const>(&vtable_for<ConcreteType>, [&_storage] 
+			{delete std::any_cast<ConcreteType>(&_storage); });
+	}
+
 private:
+
 	std::any m_storage{};
 	std::shared_ptr<ibase const> m_vtable{};
 };

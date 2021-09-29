@@ -6,3 +6,4 @@ void Object::draw(sf::RenderWindow& w)
 }
 
 
+
