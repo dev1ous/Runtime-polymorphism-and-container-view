@@ -1,2 +1,15 @@
-﻿  test.cpp
-  Runtime polymorphism and container view.vcxproj -> C:\Users\legee\source\repos\Runtime polymorphism and container view\x64\Debug\Runtime polymorphism and container view.exe
+﻿  Object.cpp
+  test.cpp
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(42,38): error C2440: '<function-style-cast>' : impossible de convertir de 'initializer list' en 'std::shared_ptr<const ibase>'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(43,1): message : Aucun constructeur n'a pu prendre le type de source, ou la résolution de la surcharge du constructeur était ambiguë
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(36): message : voir la référence à l'instanciation de la fonction modèle 'std::shared_ptr<const ibase> Object::make_shared_deleter<ConcreteType>(std::any &)' en cours de compilation
+          with
+          [
+              ConcreteType=my_class
+          ]
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(21): message : voir la référence à l'instanciation de la fonction modèle 'Object::Object<my_class>(ConcreteType &&)' en cours de compilation
+          with
+          [
+              ConcreteType=my_class
+          ]
+  Génération de code en cours...
