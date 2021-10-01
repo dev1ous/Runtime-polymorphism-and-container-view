@@ -54,8 +54,9 @@ private:
 //{
 //public:
 //	maybe_view() = default;
-//
-//	maybe_view(T x) : m_data(std::move(x)) {}
+// 
+//  template<std::ranges::output_range TContainer>
+//	maybe_view(TContainer<T> x) :  {}
 //
 //	T const* begin() const noexcept {
 //		return m_data ? &*m_data : nullptr;
@@ -67,15 +68,9 @@ private:
 //
 //	void draw(sf::RenderWindow& w)
 //	{
-//		*this | std::views::transform(this->m_data.value().draw(w)) | std::views::join;
+//		*this | std::views::transform([](auto&& x){ return x.draw(w) }) | std::views::join;
 //	}
 //
-//	template<std::ranges::output_range TContainer>
-//	constexpr auto to(TContainer const& c) 
-//	{
-//		auto x = *this | std::views::common;
-//		return TContainer(x.begin(), x.end());
-//	}
 //private:
 //	std::optional<T> m_data{};
 //};
