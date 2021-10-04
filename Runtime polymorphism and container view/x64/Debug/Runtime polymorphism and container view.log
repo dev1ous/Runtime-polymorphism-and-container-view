@@ -1,15 +1,19 @@
 ﻿  Object.cpp
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.cpp(8,73): error C2664: 'std::any &(std::any &)' : impossible de convertir l'argument 1 de 'const std::any' en 'std::any &'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.cpp(8,63): message : La conversion perd les qualificateurs
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.cpp(17,43): error C2664: 'std::any &(std::any &)' : impossible de convertir l'argument 1 de 'const std::any' en 'std::any &'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.cpp(17,33): message : La conversion perd les qualificateurs
   test.cpp
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(42,38): error C2440: '<function-style-cast>' : impossible de convertir de 'initializer list' en 'std::shared_ptr<const ibase>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(43,1): message : Aucun constructeur n'a pu prendre le type de source, ou la résolution de la surcharge du constructeur était ambiguë
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(36): message : voir la référence à l'instanciation de la fonction modèle 'std::shared_ptr<const ibase> Object::make_shared_deleter<ConcreteType>(std::any &)' en cours de compilation
-          with
-          [
-              ConcreteType=my_class
-          ]
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(30,32): warning C4834: abandon de la valeur de retour de la fonction ayant l'attribut 'nodiscard'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(42): message : voir les informations de référence sur le modèle de variable 'const ibase vtable_def<my_class>' en cours de compilation
 C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(21): message : voir la référence à l'instanciation de la fonction modèle 'Object::Object<my_class>(ConcreteType &&)' en cours de compilation
           with
           [
               ConcreteType=my_class
           ]
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(31,32): warning C4834: abandon de la valeur de retour de la fonction ayant l'attribut 'nodiscard'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(30,96): error C2440: 'initialisation' : impossible de convertir de '<lambda_2>' en 'std::any &(__cdecl *)(std::any &)'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(30,96): message : Aucun opérateur de conversion définie par l'utilisateur disponible qui puisse effectuer cette conversion, ou l'opérateur ne peut pas être appelé
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(28,1): error C2131: l'expression n'a pas été évaluée en constante
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(28,1): message : nous avons rencontré une (sous-)expression non constante
   Génération de code en cours...
