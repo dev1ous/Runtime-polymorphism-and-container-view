@@ -20,9 +20,9 @@ auto main()->int
 	std::vector<Object> x;
 	x.push_back(my_class{});
 
-	/*for (auto&& g : x) {
+	for (auto&& g : x) {
 		g.draw(w);
-	}*/
+	}
 
 	return 0;
 }

@@ -7,50 +7,37 @@
 #include <any>
 #include <ranges>
 #include <optional>
+#include <iostream>
 #include "SFML/Graphics/RenderWindow.hpp"
 
 template<typename object_impl>
 concept object_like = requires (object_impl obj, sf::RenderWindow& w) 
 {
 	{ obj.draw(w) } -> std::same_as<void>;
+	requires std::semiregular<object_impl>;
 };
 
 struct ibase 
 {
-	void(*destroy)(std::any const&);
-	std::any&(*clone)(std::any&);
-	std::any&(*move_clone)(std::any&);
-	void(*draw)(std::any&, sf::RenderWindow const&);
+	void(*draw)(std::any&, sf::RenderWindow&);
 };
 
 template<typename ConcreteType>
-constexpr ibase vtable_def
+inline constexpr ibase make_vtable
 {
-	[] (std::any const& _storage) {delete std::any_cast<ConcreteType>(&_storage); },
-	[] (std::any& _storage) {std::make_any<ConcreteType>(std::any_cast<ConcreteType&>(_storage)); },
-	[] (std::any& _storage) {std::make_any<ConcreteType>(std::move(std::any_cast<ConcreteType&>(_storage))); },
-	[] (std::any const& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(_storage).draw(w); }
+	[] (std::any& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(_storage).draw(w); }
 };
 
 class Object
 {
 public:
-
 	template<object_like ConcreteType>
-	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, Object>) && std::semiregular<ConcreteType>
-		Object(ConcreteType&& x) : m_storage(std::make_any<ConcreteType>(x)),
-		m_vtable(std::make_shared<ibase const>(vtable_def<ConcreteType>)) {}
-	~Object();
-
-	Object(Object const&);
-	Object(Object&&) noexcept;
-	Object& operator=(Object const&);
-	Object& operator=(Object&&) noexcept;
+	Object(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
+		m_vtable(std::make_shared<ibase const>(make_vtable<ConcreteType>)) {}
 
 	void draw(sf::RenderWindow&);
 
 private:
-
 	std::any m_storage{};
 	std::shared_ptr<ibase const> m_vtable{};
 };
@@ -61,7 +48,7 @@ private:
 //public:
 //	maybe_view() = default;
 // 
-//  template<std::ranges::output_range TContainer>
+//  template<template<std::semiregular> std::ranges::output_range TContainer>
 //	maybe_view(TContainer<T> x) :  {}
 //
 //	T const* begin() const noexcept {
