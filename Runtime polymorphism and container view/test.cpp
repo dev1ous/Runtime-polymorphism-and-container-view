@@ -7,15 +7,18 @@ public:
 	my_class() {
 
 	}
-	void draw(sf::RenderWindow& w) {
+	void draw(sf::RenderWindow& w) const{
 		w.draw(t);
 	}
 	sf::Sprite t;
 	sf::Texture m;
 };
 
+int x[100];
+
 auto main()->int
 {
+
 	sf::RenderWindow w;
 	std::vector<Object> x;
 	x.push_back(my_class{});

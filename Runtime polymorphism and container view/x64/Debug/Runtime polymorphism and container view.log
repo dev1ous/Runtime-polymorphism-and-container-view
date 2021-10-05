@@ -1,4 +1,6 @@
 ﻿  Object.cpp
   test.cpp
   Génération de code en cours...
-  Runtime polymorphism and container view.vcxproj -> C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\x64\Debug\Runtime polymorphism and container view.exe
+LINK : warning LNK4300: '/INCREMENTAL' ignoré, car le module d'entrée contient des métadonnées ASAN
+Object.obj : warning LNK4075: ' /EDITANDCONTINUE' ignoré à cause de la spécification '/INCREMENTAL:NO'
+  Runtime polymorphism and container view.vcxproj -> C:\Users\legee\source\repos\Runtime polymorphism and container view\x64\Debug\Runtime polymorphism and container view.exe
