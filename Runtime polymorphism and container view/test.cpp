@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "SFML/Graphics.hpp"
+#include <list>
 
 class my_class {
 public:
@@ -18,7 +19,6 @@ int x[100];
 
 auto main()->int
 {
-
 	sf::RenderWindow w;
 	std::vector<Object> x;
 	x.push_back(my_class{});
