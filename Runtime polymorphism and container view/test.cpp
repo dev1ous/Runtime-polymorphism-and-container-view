@@ -22,6 +22,7 @@ auto main()->int
 	sf::RenderWindow w;
 	std::vector<Object> x;
 	x.push_back(my_class{});
+	view_container view{ x };
 
 	for (auto&& g : x) {
 		g.draw(w);

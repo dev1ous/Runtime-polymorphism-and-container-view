@@ -56,18 +56,18 @@ concept is_mapped = requires(T t)
 	requires std::same_as<typename T::value_type, std::pair<const typename T::key_type, typename T::mapped_type>>;
 };
 
+template<template<class...> class TContainer, class ...Args >
+using has_container_t = std::conditional_t < sizeof...(Args) == 1, std::ranges::input_range<TContainer>, is_mapped<TContainer>>;
 
 template<class ...Args>
 requires ((sizeof...(Args) > 0) && (sizeof...(Args) <= 2))
 class view_container : public std::ranges::view_interface<view_container<Args...>>
 {
 public:
-	view_container() = default;
 
 	template<template<class...> class TContainer>
-	requires (std::conditional_t<decltype(sizeof...(Args) == 1), std::is_array<TContainer>, is_mapped<TContainer>>{})
-		&& (std::same_as<typename TContainer::value_type, std::ranges::range_value_t<TContainer>>)
-		view_container(TContainer<Args...>const& x) : std::ranges::begin(x),
+	requires std::same_as<typename TContainer::value_type, std::ranges::range_value_t<TContainer>>
+		view_container(has_container_t<TContainer<Args...>>const& x) : std::ranges::begin(x),
 		std::ranges::end(x) {}  
 
 	void draw(sf::RenderWindow& w)
