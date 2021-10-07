@@ -1,42 +1,15 @@
 ﻿  Object.cpp
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(60,30): error C2923: 'std::conditional_t' : 'std::ranges::input_range<TContainer>' n'est pas un argument de type modèle valide pour le paramètre '_Ty1'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30037\include\xutility(2870): message : voir la déclaration de 'std::ranges::input_range<TContainer>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(60,30): error C2923: 'std::conditional_t' : 'is_mapped<TContainer>' n'est pas un argument de type modèle valide pour le paramètre '_Ty2'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(47): message : voir la déclaration de 'is_mapped<TContainer>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,18): error C3200: 'TContainer<Args...>' : argument template non valide pour le paramètre de modèle 'TContainer', modèle de classe attendu
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(77): message : voir la référence à l'instanciation classe modèle 'view_container<Args...>' en cours de compilation
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,54): error C2988: impossible de reconnaître la définition/déclaration de modèle
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,54): error C2143: erreur de syntaxe : absence de ')' avant 'const'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,61): error C3646: 'x' : spécificateur de substitution inconnu
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): error C2059: erreur de syntaxe : ')'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): error C2565: 'view_container<Args...>::view_container' : le qualificateur ref est illégal pour les constructeurs/destructeurs
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): error C2583: 'view_container<Args...>::view_container' : pointeur 'this' 'const' non conforme pour les constructeurs/destructeurs
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,85): error C3861: 'x' : identificateur introuvable
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): message : Le diagnostic s'est produit dans la fonction 'view_container<Args...>::view_container(unknown-type) const &' générée par le compilateur
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(71,20): error C3861: 'x' : identificateur introuvable
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): message : Le diagnostic s'est produit dans la fonction 'view_container<Args...>::view_container(unknown-type) const &' générée par le compilateur
   test.cpp
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(60,30): error C2923: 'std::conditional_t' : 'std::ranges::input_range<TContainer>' n'est pas un argument de type modèle valide pour le paramètre '_Ty1'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30037\include\xutility(2870): message : voir la déclaration de 'std::ranges::input_range<TContainer>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(60,30): error C2923: 'std::conditional_t' : 'is_mapped<TContainer>' n'est pas un argument de type modèle valide pour le paramètre '_Ty2'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(47): message : voir la déclaration de 'is_mapped<TContainer>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,18): error C3200: 'TContainer<Args...>' : argument template non valide pour le paramètre de modèle 'TContainer', modèle de classe attendu
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(77): message : voir la référence à l'instanciation classe modèle 'view_container<Args...>' en cours de compilation
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,54): error C2988: impossible de reconnaître la définition/déclaration de modèle
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,54): error C2143: erreur de syntaxe : absence de ')' avant 'const'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,61): error C3646: 'x' : spécificateur de substitution inconnu
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): error C2059: erreur de syntaxe : ')'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): error C2565: 'view_container<Args...>::view_container' : le qualificateur ref est illégal pour les constructeurs/destructeurs
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): error C2583: 'view_container<Args...>::view_container' : pointeur 'this' 'const' non conforme pour les constructeurs/destructeurs
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,85): error C3861: 'x' : identificateur introuvable
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): message : Le diagnostic s'est produit dans la fonction 'view_container<Args...>::view_container(unknown-type) const &' générée par le compilateur
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(71,20): error C3861: 'x' : identificateur introuvable
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70,3): message : Le diagnostic s'est produit dans la fonction 'view_container<Args...>::view_container(unknown-type) const &' générée par le compilateur
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(25,21): error C2641: impossible de déduire les arguments de modèle pour 'view_container'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(25,21): error C2783: 'view_container<Args...> view_container(unknown-type)' : impossible de déduire l'argument modèle pour 'TContainer'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(70): message : voir la déclaration de 'view_container'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(25,25): error C2784: 'view_container<Args...> view_container(view_container<Args...>)' : impossible de déduire l'argument modèle pour 'view_container<Args...>' à partir de 'std::vector<Object,std::allocator<Object>>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(64): message : voir la déclaration de 'view_container'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(25,25): error C2784: 'view_container<Args...> view_container(view_container<Args...>)' : impossible de déduire l'argument modèle pour 'view_container<Args...>' à partir de 'std::vector<Object,std::allocator<Object>>'
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(64): message : voir la déclaration de 'view_container'
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(52,64): error C2436: 'begin' : fonction membre ou classe imbriquée dans une liste d'initialiseurs de constructeurs
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(52): message : pendant la compilation de la fonction membre classe modèle 'view_container<std::vector<Object,std::allocator<Object>>>::view_container(TContainer)'
+          with
+          [
+              TContainer=std::vector<Object,std::allocator<Object>>
+          ]
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(20): message : voir la référence à l'instanciation de la fonction modèle 'view_container<std::vector<Object,std::allocator<Object>>>::view_container(TContainer)' en cours de compilation
+          with
+          [
+              TContainer=std::vector<Object,std::allocator<Object>>
+          ]
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(20): message : voir la référence à l'instanciation classe modèle 'view_container<std::vector<Object,std::allocator<Object>>>' en cours de compilation
   Génération de code en cours...

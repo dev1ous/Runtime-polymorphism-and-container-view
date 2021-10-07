@@ -15,18 +15,8 @@ public:
 	sf::Texture m;
 };
 
-int x[100];
-
-auto main()->int
-{
-	sf::RenderWindow w;
+int main() {
 	std::vector<Object> x;
-	x.push_back(my_class{});
-	view_container view{ x };
-
-	for (auto&& g : x) {
-		g.draw(w);
-	}
-
+	view_container v{ x };
 	return 0;
 }
