@@ -29,12 +29,10 @@ inline constexpr Ibase make_vtable
 	[] (std::any const& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType const&>(_storage).draw(w); }
 };
 
-class Object
+struct Object
 {
-public:
-	template<object_like ConcreteType>
-	Object(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
-		m_vtable(std::make_shared<Ibase const>(make_vtable<ConcreteType>)) {}
+	Object(object_like auto&& x) : m_storage(std::forward<decltype(x)>(x)),
+		m_vtable(std::make_shared<Ibase const>(make_vtable<decltype(x)>)) {}
 
 	void draw(sf::RenderWindow&) const;
 
@@ -43,18 +41,30 @@ private:
 	std::shared_ptr<Ibase const> m_vtable{};
 };
 
-template<std::semiregular T>
-struct view_container : public std::ranges::view_interface<view_container<T>>
+template<std::ranges::range R>
+requires std::ranges::view<R>
+class view_container : public std::ranges::view_interface<view_container<R>>
 {
-	template<std::ranges::input_range R>
-	requires std::same_as<T, std::ranges::range_value_t<R>>
-		view_container(R&& r) : view_container(std::ranges::begin(r), std::ranges::end(r)) {}
+public:
+	view_container() = default;
+	view_container(R&& r) :  m_data(std::move(r)){}
 
-	void draw(sf::RenderWindow& w)
-	{
-		*this | std::views::transform([](auto&& x) { return x.draw(w); }) | std::views::join;
+	constexpr decltype(auto) begin() const noexcept {
+		return std::ranges::cbegin(m_data.value());
 	}
+	constexpr decltype(auto) end() const noexcept {
+		return std::ranges::cend(m_data.value());
+	}
+
+	/*void draw(sf::RenderWindow& w) {
+		*this | std::views::transform([&w](auto&& x) { x.draw(w); });
+	}*/
+private:
+	std::optional<R> m_data{};
 };
+
+template<std::ranges::range R>
+view_container(R&& r)->view_container<std::views::all_t<R>>;
 
 #endif
 
