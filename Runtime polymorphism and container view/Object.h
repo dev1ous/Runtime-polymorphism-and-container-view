@@ -64,7 +64,7 @@ private:
 };
 
 template<std::ranges::range R>
-view_container(R&& r)->view_container<std::views::all_t<R>>;
+view_container(R&&)->view_container<std::views::all_t<R>>;
 
 #endif
 

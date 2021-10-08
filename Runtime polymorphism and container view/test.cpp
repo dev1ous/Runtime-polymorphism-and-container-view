@@ -17,10 +17,10 @@ public:
 
 int main() {
 	sf::RenderWindow w;
-	std::vector<Object> x;
+	auto x = std::vector<Object>{ my_class{} };
 	view_container v{ x };
 
-	auto view = v | std::views::transform([&w](auto&& t) { t.draw(w); });
+	auto view = v | std::views::transform([&w](auto&& t) { t.draw(w); }) ;
 
 	return 0;
 }

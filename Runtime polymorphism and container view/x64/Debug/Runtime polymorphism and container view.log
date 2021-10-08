@@ -1,8 +1,8 @@
 ﻿  Object.cpp
   test.cpp
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(23,70): error C2678: '|' binaire : aucun opérateur trouvé qui accepte un opérande de partie gauche de type 'view_container<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>>' (ou il n'existe pas de conversion acceptable)
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30037\include\cstddef(43,27): message : peut être 'std::byte std::operator |(const std::byte,const std::byte) noexcept' [trouvé à l'aide d'une recherche dépendante d'un argument]
-C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(23,70): message : lors de la tentative de mise en correspondance de la liste des arguments '(view_container<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>>, std::ranges::views::_Transform_fn::_Partial<_Fn>)'
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(23,71): error C2678: '|' binaire : aucun opérateur trouvé qui accepte un opérande de partie gauche de type 'view_container<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>>' (ou il n'existe pas de conversion acceptable)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\cstddef(43,27): message : peut être 'std::byte std::operator |(const std::byte,const std::byte) noexcept' [trouvé à l'aide d'une recherche dépendante d'un argument]
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(23,71): message : lors de la tentative de mise en correspondance de la liste des arguments '(view_container<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>>, std::ranges::views::_Transform_fn::_Partial<_Fn>)'
           with
           [
               _Fn=main::<lambda_1>
