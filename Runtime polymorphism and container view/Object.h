@@ -20,51 +20,68 @@ concept object_like = requires (object_impl obj, sf::RenderWindow& w)
 
 struct Ibase 
 {
-	void(*draw)(std::any const&, sf::RenderWindow&);
+	void(*draw)(std::any&, sf::RenderWindow&);
+	std::any(*copy)(std::any const&);
+	std::any(*move)(std::any&);
 };
 
 template<class ConcreteType>
 inline constexpr Ibase make_vtable
 {
-	[] (std::any const& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType const&>(_storage).draw(w); }
+	[](std::any& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(_storage).draw(w); },
+	[](std::any const& _storage) -> std::any { return std::any_cast<ConcreteType const&>(_storage); },
+	[](std::any& _storage) -> std::any { return std::move(std::any_cast<ConcreteType&>(_storage)); }
 };
 
-struct Object
+class Object
 {
-	Object(object_like auto&& x) : m_storage(std::forward<decltype(x)>(x)),
-		m_vtable(std::make_shared<Ibase const>(make_vtable<decltype(x)>)) {}
+public:
+	template<object_like ConcreteType>
+	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, Object>)
+		Object(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
+		m_vtable(std::make_shared<Ibase const>(make_vtable<ConcreteType>)) {}
+	~Object() = default;
 
-	void draw(sf::RenderWindow&) const;
+	Object(Object const&);
+	Object& operator=(Object const&);
+	Object(Object&&) noexcept;
+	Object& operator=(Object&&) noexcept;
+
+	void draw(sf::RenderWindow&);
 
 private:
 	std::any m_storage{};
 	std::shared_ptr<Ibase const> m_vtable{};
 };
 
-template<std::ranges::range R>
-requires std::ranges::view<R>
+template<typename R>
+requires (std::is_object_v<R>) && (std::ranges::view<R>)
 class view_container : public std::ranges::view_interface<view_container<R>>
 {
 public:
-	view_container() = default;
-	view_container(R&& r) :  m_data(std::move(r)){}
+	constexpr view_container() noexcept = default;
+	constexpr view_container(R&& r) noexcept : m_data(std::move(r)) {}
 
-	constexpr decltype(auto) begin() const noexcept {
-		return std::ranges::cbegin(m_data.value());
+	[[nodiscard]] constexpr std::ranges::iterator_t<R> begin() const noexcept(
+		noexcept(std::ranges::begin(m_data.value()))) {
+		return std::ranges::begin(m_data.value());
 	}
-	constexpr decltype(auto) end() const noexcept {
-		return std::ranges::cend(m_data.value());
+	[[nodiscard]] constexpr std::ranges::sentinel_t<R> end() const noexcept(
+		noexcept(std::ranges::end(m_data.value()))) {
+		return std::ranges::end(m_data.value());
 	}
-
 	/*void draw(sf::RenderWindow& w) {
 		*this | std::views::transform([&w](auto&& x) { x.draw(w); });
 	}*/
 private:
-	std::optional<R> m_data{};
+	std::optional<std::reference_wrapper<R>> m_data{};
 };
 
 template<std::ranges::range R>
 view_container(R&&)->view_container<std::views::all_t<R>>;
+
+template <std::ranges::range R>
+inline constexpr bool std::ranges::enable_borrowed_range<view_container<R>> = true;
 
 #endif
 
