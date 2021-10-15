@@ -17,10 +17,11 @@ public:
 std::vector<Object> x{ my_class{} };
 view_container view{ x };
 
-int main() {
+auto main() -> int
+{
 	sf::RenderWindow w;
 
-	auto i = view | std::views::transform([&w](Object&& g) { g.draw(w); });
+	auto i = view | std::views::transform([&w](auto&& obj) {obj.draw(w); });
 
 	return 0;
 }

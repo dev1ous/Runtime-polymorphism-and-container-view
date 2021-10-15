@@ -54,8 +54,8 @@ private:
 	std::shared_ptr<Ibase const> m_vtable{};
 };
 
-template<typename R>
-requires (std::is_object_v<R>) && (std::ranges::view<R>)
+template<std::ranges::input_range R>
+requires std::ranges::view<R>
 class view_container : public std::ranges::view_interface<view_container<R>>
 {
 public:
@@ -70,6 +70,7 @@ public:
 		noexcept(std::ranges::end(m_data.value()))) {
 		return std::ranges::end(m_data.value());
 	}
+
 	/*void draw(sf::RenderWindow& w) {
 		*this | std::views::transform([&w](auto&& x) { x.draw(w); });
 	}*/
@@ -77,7 +78,7 @@ private:
 	std::optional<std::reference_wrapper<R>> m_data{};
 };
 
-template<std::ranges::range R>
+template<std::ranges::input_range R>
 view_container(R&&)->view_container<std::views::all_t<R>>;
 
 template <std::ranges::range R>
