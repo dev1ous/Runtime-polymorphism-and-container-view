@@ -1,27 +1,12 @@
-﻿  Object.cpp
-  test.cpp
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(62,1): error C2664: 'std::optional<std::reference_wrapper<R>>::optional(std::nullopt_t) noexcept' : impossible de convertir l'argument 1 de 'std::reference_wrapper<const R>' en 'std::nullopt_t'
+﻿  test.cpp
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(22,104): error C2678: '|' binaire : aucun opérateur trouvé qui accepte un opérande de partie gauche de type 'std::ranges::transform_view<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>,_Ty>' (ou il n'existe pas de conversion acceptable)
           with
           [
-              R=std::vector<Object,std::allocator<Object>>
+              _Ty=main::<lambda_1>
           ]
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(62,65): message : Aucun opérateur de conversion définie par l'utilisateur disponible qui puisse effectuer cette conversion, ou l'opérateur ne peut pas être appelé
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\optional(171,5): message : voir la déclaration de 'std::optional<std::reference_wrapper<R>>::optional'
-          with
-          [
-              R=std::vector<Object,std::allocator<Object>>
-          ]
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(62): message : pendant la compilation de la fonction membre classe modèle 'view_container<std::vector<Object,std::allocator<Object>>>::view_container(const R &) noexcept'
-          with
-          [
-              R=std::vector<Object,std::allocator<Object>>
-          ]
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(18): message : voir la référence à l'instanciation classe modèle 'view_container<std::vector<Object,std::allocator<Object>>>' en cours de compilation
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(24,70): error C2678: '|' binaire : aucun opérateur trouvé qui accepte un opérande de partie gauche de type 'view_container<std::vector<Object,std::allocator<Object>>>' (ou il n'existe pas de conversion acceptable)
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\cstddef(43,27): message : peut être 'std::byte std::operator |(const std::byte,const std::byte) noexcept' [trouvé à l'aide d'une recherche dépendante d'un argument]
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\test.cpp(24,70): message : lors de la tentative de mise en correspondance de la liste des arguments '(view_container<std::vector<Object,std::allocator<Object>>>, std::ranges::views::_Transform_fn::_Partial<_Fn>)'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(22,104): message : lors de la tentative de mise en correspondance de la liste des arguments '(std::ranges::transform_view<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>,_Ty>, const std::ranges::views::_Join_fn)'
           with
           [
-              _Fn=main::<lambda_1>
+              _Ty=main::<lambda_1>
           ]
-  Génération de code en cours...

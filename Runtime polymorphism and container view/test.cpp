@@ -14,14 +14,12 @@ public:
 	sf::Texture m;
 };
 
-std::vector<Object> x{ my_class{} };
-view_container view{ x };
-
 auto main() -> int
 {
 	sf::RenderWindow w;
-
-	auto i = view | std::views::transform([&w](auto&& obj) {obj.draw(w); });
+	std::vector<Object> x{ my_class{} };
+	view_container view{ x };
+	auto i = view | std::views::transform([&w](auto obj)->decltype(obj) { co_yield obj; }) | std::views::join;
 
 	return 0;
 }

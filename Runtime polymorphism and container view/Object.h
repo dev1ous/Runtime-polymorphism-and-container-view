@@ -54,7 +54,7 @@ private:
 	std::shared_ptr<Ibase const> m_vtable{};
 };
 
-template<std::ranges::input_range R>
+template<std::ranges::range R>
 requires std::ranges::view<R>
 class view_container : public std::ranges::view_interface<view_container<R>>
 {
@@ -62,23 +62,21 @@ public:
 	constexpr view_container() noexcept = default;
 	constexpr view_container(R&& r) noexcept : m_data(std::move(r)) {}
 
-	[[nodiscard]] constexpr std::ranges::iterator_t<R> begin() const noexcept(
-		noexcept(std::ranges::begin(m_data.value()))) {
-		return std::ranges::begin(m_data.value());
-	}
-	[[nodiscard]] constexpr std::ranges::sentinel_t<R> end() const noexcept(
-		noexcept(std::ranges::end(m_data.value()))) {
-		return std::ranges::end(m_data.value());
+	R const* begin() const noexcept {
+		return m_data ? &*m_data : nullptr;
 	}
 
+	R const* end() const noexcept {
+		return m_data ? &*m_data + 1 : nullptr;
+	}
 	/*void draw(sf::RenderWindow& w) {
 		*this | std::views::transform([&w](auto&& x) { x.draw(w); });
 	}*/
 private:
-	std::optional<std::reference_wrapper<R>> m_data{};
+	std::optional<R> m_data{};
 };
 
-template<std::ranges::input_range R>
+template<std::ranges::range R>
 view_container(R&&)->view_container<std::views::all_t<R>>;
 
 template <std::ranges::range R>
