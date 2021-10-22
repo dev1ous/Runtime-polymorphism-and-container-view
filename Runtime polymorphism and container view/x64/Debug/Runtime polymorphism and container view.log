@@ -1,5 +1,9 @@
 ﻿  Object.cpp
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(51,40): error C2760: erreur de syntaxe : jeton inattendu '<', attendu ')'
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(50,3): message : Le diagnostic s'est produit dans la fonction 'interface_impl<IStrategy...>::interface_impl(ConcreteType &&)' générée par le compilateur
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(56): message : voir la référence à l'instanciation classe modèle 'interface_impl<IStrategy...>' en cours de compilation
   test.cpp
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(51,40): error C2760: erreur de syntaxe : jeton inattendu '<', attendu ')'
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(50,3): message : Le diagnostic s'est produit dans la fonction 'interface_impl<IStrategy...>::interface_impl(ConcreteType &&)' générée par le compilateur
+C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(56): message : voir la référence à l'instanciation classe modèle 'interface_impl<IStrategy...>' en cours de compilation
   Génération de code en cours...
-  LINK : C:\Users\legee\source\repos\Runtime polymorphism and container view\x64\Debug\Runtime polymorphism and container view.exe introuvable ou non généré par la dernière édition de liens incrémentielle ; édition de liens complète en cours
-  Runtime polymorphism and container view.vcxproj -> C:\Users\legee\source\repos\Runtime polymorphism and container view\x64\Debug\Runtime polymorphism and container view.exe

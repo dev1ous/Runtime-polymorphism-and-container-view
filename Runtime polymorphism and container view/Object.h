@@ -11,6 +11,19 @@
 #include <type_traits>
 #include "SFML/Graphics/RenderWindow.hpp"
 
+namespace details
+{
+	template<template<class> class Trait, typename U>
+	struct add_ptr {};
+
+	template<template<class> class Trait, typename... Types>
+	struct add_ptr<Trait, std::tuple<Types...>> 
+	{
+		using type = std::tuple<typename std::add_pointer<Types>::type...,
+			typename std::add_pointer<typename Trait<Types>::type>::type...>;
+	};
+}
+
 template<class object_impl>
 concept object_like = requires (object_impl obj, sf::RenderWindow& w) 
 {
@@ -28,18 +41,18 @@ inline constexpr IDrawStrategy make_vtable
 	[](std::any& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(_storage).draw(w); }
 };
 
-template<class Interface>
+template<class ...IStrategy>
 class interface_impl
 {
 public:
 	template<object_like ConcreteType>
-	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, interface_impl>) && (std::semiregular<ConcreteType>)
+	requires (not std::same_as<std::remove_cvref_t<ConcreteType>, interface_impl>) and (std::semiregular<ConcreteType>)
 		interface_impl(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
-		m_vtable(std::make_shared<Interface const>(make_vtable<ConcreteType>)) {}
+		m_vtable(std::make_tuple()) {} //????????????????
 
 private:
 	std::any m_storage{};
-	std::shared_ptr<Interface const> m_vtable{};
+	details::add_ptr<std::add_const, std::tuple<IStrategy...>>::type m_vtable;
 };
 
 namespace obj 
