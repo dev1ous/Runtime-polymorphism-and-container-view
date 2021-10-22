@@ -21,10 +21,5 @@ int main()
 	view_container view{ x };
 	view.draw(w);
 
-<<<<<<< Updated upstream
-=======
-	/*auto k = view | std::views::transform([](auto underlying_view) { return underlying_view; }) | std::views::join 
-		| std::views::transform([&w](auto& obj) -> decltype(obj) { obj.draw(w); });*/
->>>>>>> Stashed changes
 	return 0;
 }

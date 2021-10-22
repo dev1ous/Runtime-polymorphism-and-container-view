@@ -33,17 +33,9 @@ class interface_impl
 {
 public:
 	template<object_like ConcreteType>
-<<<<<<< Updated upstream
-	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, Object>)
-		Object(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
-		m_vtable(std::make_shared<Ibase const>(make_vtable<ConcreteType>)) {}
-
-	void draw(sf::RenderWindow&);
-=======
 	requires (!std::same_as<std::remove_cvref_t<ConcreteType>, interface_impl>) && (std::semiregular<ConcreteType>)
 		interface_impl(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
 		m_vtable(std::make_shared<Interface const>(make_vtable<ConcreteType>)) {}
->>>>>>> Stashed changes
 
 private:
 	std::any m_storage{};
@@ -78,14 +70,10 @@ public:
 	R const* end() const noexcept {
 		return m_data ? &*m_data + 1 : nullptr;
 	}
-	void draw(sf::RenderWindow& w) {
-<<<<<<< Updated upstream
-		auto k = *this | std::views::transform([](auto underlying_view) { return underlying_view; }) | std::views::join
-			| std::views::transform([&w](auto& obj) -> decltype(obj) { obj.draw(w); });
-=======
+	void draw(sf::RenderWindow& w)
+	{
 		auto i = *this | std::views::transform([](auto underlying_view) { return underlying_view; }) | std::views::join
 			| std::views::transform([&w](auto& x) -> decltype(x) { obj::draw(x, w); });
->>>>>>> Stashed changes
 	}
 private:
 	std::optional<R> m_data{};
