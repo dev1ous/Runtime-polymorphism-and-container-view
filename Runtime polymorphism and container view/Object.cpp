@@ -1,5 +1,6 @@
 #include "Object.h"
 
+<<<<<<< Updated upstream
 void Object::draw(sf::RenderWindow& w)
 {
 	m_vtable->draw(m_storage, w);
@@ -7,3 +8,5 @@ void Object::draw(sf::RenderWindow& w)
 
 
 
+=======
+>>>>>>> Stashed changes

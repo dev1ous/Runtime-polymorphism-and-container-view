@@ -14,12 +14,17 @@ public:
 	sf::Texture m;
 };
 
-auto main() -> int
+int main()
 {
 	sf::RenderWindow w;
-	std::vector<Object> x{ my_class{} };
+	std::vector<interface_impl<IDrawStrategy>> x{ my_class{} };
 	view_container view{ x };
 	view.draw(w);
 
+<<<<<<< Updated upstream
+=======
+	/*auto k = view | std::views::transform([](auto underlying_view) { return underlying_view; }) | std::views::join 
+		| std::views::transform([&w](auto& obj) -> decltype(obj) { obj.draw(w); });*/
+>>>>>>> Stashed changes
 	return 0;
 }
