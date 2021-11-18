@@ -9,20 +9,28 @@
 #include <optional>
 #include <iostream>
 #include <type_traits>
-#include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/Graphics.hpp"
 
-namespace details
-{
-	template<template<class> class Trait, typename U>
-	struct add_ptr {};
+class my_class {
+public:
 
-	template<template<class> class Trait, typename... Types>
-	struct add_ptr<Trait, std::tuple<Types...>> 
-	{
-		using type = std::tuple<typename std::add_pointer<Types>::type...,
-			typename std::add_pointer<typename Trait<Types>::type>::type...>;
-	};
-}
+	my_class() {
+		m.loadFromFile("../Ressources/golden.png");
+		t.setTexture(m);
+		t.setPosition(0.f, 0.f);
+	}
+	void draw(sf::RenderWindow& w) const {
+		w.draw(t);
+	}
+	sf::Sprite t;
+	sf::Texture m;
+};
+
+struct Draw {
+	void operator()(my_class const& mc, sf::RenderWindow& w) {
+		mc.draw(w);
+	}
+};
 
 template<class object_impl>
 concept object_like = requires (object_impl obj, sf::RenderWindow& w) 
@@ -30,43 +38,37 @@ concept object_like = requires (object_impl obj, sf::RenderWindow& w)
 	{ obj.draw(w) } -> std::same_as<void>;
 };
 
-struct IDrawStrategy
+struct IBase
 {
+	void(*accept)(std::any&, std::any const&);
 	void(*draw)(std::any&, sf::RenderWindow&);
 };
 
 template<class ConcreteType>
-inline constexpr IDrawStrategy make_vtable
+inline constexpr IBase make_vtable
 {
-	[](std::any& _storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(_storage).draw(w); }
+	[](std::any& storage, std::any const& visitor) { std::any_cast<ConcreteType&>(storage); },
+	[](std::any& storage, sf::RenderWindow& w) { std::any_cast<ConcreteType&>(storage).draw(w); }
 };
 
-template<class ...IStrategy>
-class interface_impl
+class Object
 {
 public:
 	template<object_like ConcreteType>
-	requires (not std::same_as<std::remove_cvref_t<ConcreteType>, interface_impl>) and (std::semiregular<ConcreteType>)
-		interface_impl(ConcreteType&& x) : m_storage(std::forward<ConcreteType>(x)),
-		m_vtable(std::make_tuple()) {} //????????????????
+	requires (not std::same_as<std::remove_cvref_t<ConcreteType>, Object>) and (std::semiregular<ConcreteType>)
+		constexpr Object(ConcreteType&& x) noexcept : m_storage(std::forward<ConcreteType>(x)),
+		m_vtable(std::make_shared<IBase const>(make_vtable<ConcreteType>)) {}
+
+	void accept(auto const& visit);
+
+	void draw(sf::RenderWindow& w) {
+		m_vtable->draw(m_storage, w);
+	}
 
 private:
 	std::any m_storage{};
-	details::add_ptr<std::add_const, std::tuple<IStrategy...>>::type m_vtable;
+	std::shared_ptr<IBase const> m_vtable{};
 };
-
-namespace obj 
-{
-	struct draw_fn
-	{
-	private:
-		constexpr auto operator()(auto& x, sf::RenderWindow& w)
-		{
-			x.m_vtable->draw(x.m_storage, w);
-		}
-	};
-	inline constexpr draw_fn draw{};
-}
 
 template<std::ranges::range R>
 requires std::ranges::view<R>
@@ -77,25 +79,35 @@ public:
 	constexpr view_container(R&& r) noexcept : m_data(std::move(r)) {}
 
 	R const* begin() const noexcept {
-		return m_data ? &*m_data : nullptr;
+		return m_data.has_value() ? std::addressof(m_data.value()) : nullptr;
 	}
 
 	R const* end() const noexcept {
-		return m_data ? &*m_data + 1 : nullptr;
+		return m_data.has_value() ? std::addressof(m_data.value()) + 1 : nullptr;
 	}
-	void draw(sf::RenderWindow& w)
-	{
-		auto i = *this | std::views::transform([](auto underlying_view) { return underlying_view; }) | std::views::join
-			| std::views::transform([&w](auto& x) -> decltype(x) { obj::draw(x, w); });
-	}
+
 private:
 	std::optional<R> m_data{};
 };
 
+//template<std::ranges::input_range R>
+//view_container(R&)->view_container<R>;
+
 template<std::ranges::range R>
 view_container(R&&)->view_container<std::views::all_t<R>>;
 
-template <std::ranges::range R>
+template <std::ranges::input_range R>
 inline constexpr bool std::ranges::enable_borrowed_range<view_container<R>> = true;
 
+void draw(std::ranges::range auto& v, sf::RenderWindow& w)
+{
+	auto i = v | std::views::transform([](auto underlying_view) { return underlying_view; }) | std::views::join
+		| std::views::transform([&w](auto x)->decltype(x) { x.draw(w); });
+}
+
+inline constexpr auto yield_if =
+[]<std::semiregular T>(bool b, T x) {
+	return b ? view_container{ std::move(x) }
+	: view_container<T>{};
+};
 #endif

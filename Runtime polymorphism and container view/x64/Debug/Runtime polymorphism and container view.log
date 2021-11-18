@@ -1,9 +1,24 @@
-﻿  Object.cpp
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(51,40): error C2760: erreur de syntaxe : jeton inattendu '<', attendu ')'
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(50,3): message : Le diagnostic s'est produit dans la fonction 'interface_impl<IStrategy...>::interface_impl(ConcreteType &&)' générée par le compilateur
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(56): message : voir la référence à l'instanciation classe modèle 'interface_impl<IStrategy...>' en cours de compilation
-  test.cpp
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(51,40): error C2760: erreur de syntaxe : jeton inattendu '<', attendu ')'
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(50,3): message : Le diagnostic s'est produit dans la fonction 'interface_impl<IStrategy...>::interface_impl(ConcreteType &&)' générée par le compilateur
-C:\Users\G.Faltrauer\Documents\GitHub\Runtime-polymorphism-and-container-view\Runtime polymorphism and container view\Object.h(56): message : voir la référence à l'instanciation classe modèle 'interface_impl<IStrategy...>' en cours de compilation
-  Génération de code en cours...
+﻿  test.cpp
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(50,56): warning C4834: abandon de la valeur de retour de la fonction ayant l'attribut 'nodiscard'
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(60): message : voir les informations de référence sur le modèle de variable 'const IBase make_vtable<my_class>' en cours de compilation
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(7): message : voir la référence à l'instanciation de la fonction modèle 'Object::Object<my_class>(ConcreteType &&) noexcept' en cours de compilation
+          with
+          [
+              ConcreteType=my_class
+          ]
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(104,13): error C2678: '|' binaire : aucun opérateur trouvé qui accepte un opérande de partie gauche de type 'std::ranges::transform_view<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>,_Ty>' (ou il n'existe pas de conversion acceptable)
+          with
+          [
+              _Ty=draw::<lambda_1>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\include\cstddef(43,27): message : peut être 'std::byte std::operator |(const std::byte,const std::byte) noexcept' [trouvé à l'aide d'une recherche dépendante d'un argument]
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\Object.h(105,1): message : lors de la tentative de mise en correspondance de la liste des arguments '(std::ranges::transform_view<std::ranges::ref_view<std::vector<Object,std::allocator<Object>>>,_Ty>, const std::ranges::views::_Join_fn)'
+          with
+          [
+              _Ty=draw::<lambda_1>
+          ]
+C:\Users\legee\source\repos\Runtime polymorphism and container view\Runtime polymorphism and container view\test.cpp(22): message : voir la référence à l'instanciation de la fonction modèle 'void draw<std::vector<Object,std::allocator<Object>>>(_T0 &,sf::RenderWindow &)' en cours de compilation
+          with
+          [
+              _T0=std::vector<Object,std::allocator<Object>>
+          ]
